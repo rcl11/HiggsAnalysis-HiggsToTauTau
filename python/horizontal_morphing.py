@@ -85,6 +85,67 @@ class Morph:
         if upper>lower :
             norm = hist_lower.Integral()+(hist_upper.Integral()-hist_lower.Integral())/abs(upper-lower)*(value-lower)
         return norm
+    
+    def fix_nbins(self, hist, hist_lower, hist_upper, lower, upper, value) :
+        ## If both hist_lower and hist_upper have >= 1 bins populated, the number of populated
+        ## bins in the interploated histogram can be found by linear interpolation between the
+        ## two.
+        lower_bins = 0
+        upper_bins = 0
+        morph_bins = 0
+        initial_integral = hist.Integral()
+        for i in range(hist_lower.GetNbinsX()):
+          if hist_lower.GetBinContent(i+1) > 0: lower_bins += 1
+        for i in range(hist_upper.GetNbinsX()):
+          if hist_upper.GetBinContent(i+1) > 0: upper_bins += 1
+        for i in range(hist.GetNbinsX()):
+          if hist.GetBinContent(i+1) > 0: morph_bins += 1
+        #print "Lower "+str(lower_bins)+"  RMS "+str(hist_lower.GetRMS())
+        #print "Morph "+str(morph_bins)+"  RMS "+str(hist.GetRMS())
+        #print "Upper "+str(upper_bins)+"  RMS "+str(hist_upper.GetRMS())
+        if lower_bins==0 or upper_bins==0: return
+        target = float(lower_bins)+(float(upper_bins)-float(lower_bins))/abs(upper-lower)*(value-lower)
+        ntarget = int(target+0.5)
+        #print "Target "+str(ntarget)
+        remove = morph_bins - ntarget
+        tot_removed = 0.0
+        if remove > 0:
+          while remove >0:
+            min_bin = -1
+            min_val = -1
+            for i in range(hist.GetNbinsX()):
+              if hist.GetBinContent(i+1) > 0.0 and min_val < 0.0:
+                min_val = hist.GetBinContent(i+1)
+                min_bin = i+1
+              if hist.GetBinContent(i+1) > 0.0 and hist.GetBinContent(i+1) < min_val:
+                min_val = hist.GetBinContent(i+1)
+                min_bin = i+1
+            #print "Found min value of " + str(min_val) + " in bin " + str(min_bin)
+            tot_removed += min_val
+            hist.SetBinContent(min_bin, 0.0)
+            remove -= 1
+        final_integral = hist.Integral()
+        hist.Scale(initial_integral/final_integral)
+        frac_removed = tot_removed/initial_integral
+        #print 'Fraction removed ' + str(frac_removed)
+        #print "Morph RMS "+str(hist.GetRMS())
+
+      
+        ##print file, directory, name.format(MASS=value)
+        """
+        preintegral=hist.Integral()
+        for i in range(hist.GetNbinsX()):
+            if hist.GetBinContent(i+1) < 0:
+                print "Warning: setting negativ content of bin {BIN} to zero".format(BIN=str(i))
+                hist.SetBinContent(i+1,0)
+        hist.Scale(preintegral/hist.Integral())
+        file.Cd("/"+directory)
+        hist.Write(name.format(MASS=value),ROOT.TObject.kOverwrite)
+        norm = 1.
+        if upper>lower :
+            norm = hist_lower.Integral()+(hist_upper.Integral()-hist_lower.Integral())/abs(upper-lower)*(value-lower)
+        return norm
+        """
 
     def morph_hist(self, file, directory, name, lower, upper, value) :
         """
@@ -108,6 +169,7 @@ class Morph:
             hist_lower = hist_morph
         if not hist_upper and upper == value:
             hist_upper = hist_morph
+        self.fix_nbins(hist_morph, hist_lower, hist_upper, float(lower), float(upper), float(value))
         if self.verbose :
             print "writing morphed histogram to file: name =", hist_morph.GetName(), "integral =[ %.5f | %.5f | %.5f ]" % (hist_lower.Integral(), hist_morph.Integral(), hist_upper.Integral())
         if directory == "" :
