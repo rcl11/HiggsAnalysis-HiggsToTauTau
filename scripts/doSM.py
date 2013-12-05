@@ -331,14 +331,36 @@ if options.update_setup :
                     for cat in config.categories[chn][per]:
                         if chn == 'vhtt':
                             for file in glob.glob("{SETUP}/{CHN}/vhtt.inputs-sm-{PER}*.root".format(SETUP=setup,CHN=chn, PER=per, CAT=cat)):
-                                for proc in ['WH','ZH','VH']:
-                                    template_morphing = Morph(file, get_channel_dirs(chn,"0"+cat,per)[0], proc+'{MASS}', ','.join(get_shape_systematics(setup,per,chn,"0"+cat,proc)), masspoints[i]+','+masspoints[i+1], options.interpolate, True,'', '') 
+                                if cat in ['0','1']:
+                                    proc = 'WH'
+                                if cat in ['3','4','5','6']:
+                                    proc = 'ZH_htt'
+                                if cat in ['7','8']:
+                                    proc = 'WH_htt'
+                                for dir in get_channel_dirs(chn,"0"+cat,per):
+                                    template_morphing = Morph(file, dir, proc+'{MASS}', ','.join(get_shape_systematics(setup,per,chn,"0"+cat,proc,dir)), masspoints[i]+','+masspoints[i+1], options.interpolate, True,'', '') 
                                     template_morphing.run()
+                                if any('hww-sig' in ana for ana in analyses):
+                                    if cat in ['0','1']:
+                                        proc = 'WH_hww'
+                                        for dir in get_channel_dirs(chn,"0"+cat,per):
+                                            template_morphing = Morph(file, dir, proc+'{MASS}', ','.join(get_shape_systematics(setup,per,chn,"0"+cat,proc,dir)), masspoints[i]+','+masspoints[i+1], options.interpolate, True,'', '') 
+                                            template_morphing.run()
+                                    if cat in ['3','4','5','6']:
+                                        proc = 'ZH_hww'
+                                        for dir in get_channel_dirs(chn,"0"+cat,per):
+                                            template_morphing = Morph(file, dir, proc+'{MASS}', ','.join(get_shape_systematics(setup,per,chn,"0"+cat,proc,dir)), masspoints[i]+','+masspoints[i+1], options.interpolate, True,'', '') 
+                                            template_morphing.run()
                         else:
                             for file in glob.glob("{SETUP}/{CHN}/htt_{CHN}.inputs-sm-{PER}*.root".format(SETUP=setup,CHN=chn, PER=per, CAT=cat)):
                                 for proc in ['ggH','qqH','VH']:
                                     template_morphing = Morph(file, get_channel_dirs(chn,"0"+cat,per)[0], proc+'{MASS}', ','.join(get_shape_systematics(setup,per,chn,"0"+cat,proc)), masspoints[i]+','+masspoints[i+1], options.interpolate, True,'', '') 
                                     template_morphing.run()
+                                if chn == 'em' and any('hww-sig' in ana for ana in analyses):
+                                    for proc in ['ggH_hww','qqH_hww']:
+                                        template_morphing = Morph(file, get_channel_dirs(chn,"0"+cat,per)[0], proc+'{MASS}', ','.join(get_shape_systematics(setup,per,chn,"0"+cat,proc)), masspoints[i]+','+masspoints[i+1], options.interpolate, True,'', '') 
+                                        template_morphing.run()
+                                    
             ## add the new points to the masses array
             masses.append(masspoints[i]+'-'+masspoints[i+1]+':'+options.interpolate)
     ## set up directory structure
