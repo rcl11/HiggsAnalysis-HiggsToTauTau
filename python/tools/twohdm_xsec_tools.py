@@ -34,7 +34,7 @@ class twohdm_xsec_tools():
         i=0
         #print searched_parameter
         while tree.GetEntry(i):
-            if twoHDMtanb[0]==tan_beta :
+            if abs(twoHDMtanb[0]-tan_beta)<0.0001 :
                 if branch=="" :
                     #print float(all_parameter1[0]), float(searched_param[0]), float(parameter1)
                     Spline.SetPoint(k, float(all_parameter1[0]), float(searched_param[0]))

@@ -15,7 +15,7 @@ layout = cms.PSet(
     ## theory label 
     theory = cms.string("2HDM type-II"),
     ## min for plotting
-    min = cms.double(1),
+    min = cms.double(0.1),
     ## max for plotting
     max = cms.double(10),
     ## min for plotting
