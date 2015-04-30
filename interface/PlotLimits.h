@@ -186,6 +186,7 @@ class PlotLimits {
   std::string output_;
   /// string for CMS preliminary stamp on officla plots
   std::string dataset_;
+  std::string extra_lb_;
   /// string for x-axis title
   std::string xaxis_;
   /// string for y-axis title

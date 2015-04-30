@@ -24,5 +24,7 @@ void InitSignal(TH1* hist);
 void SetLegendStyle(TLegend* leg);
 /// add CMSPreliminary logo, lumi and channel
 void CMSPrelim(const char* dataset, const char* channel, double lowX=0.4, double lowY=0.74);
+/// CMS preliminary, lumi and channel in new style
+void CMSPrelim2015(const char* typelabel,  const char* lumilabel, const char* channel, int prelimpos=0, double lowX=0.4, double lowY=0.74);
 
 #endif

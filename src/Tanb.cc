@@ -452,10 +452,10 @@ PlotLimits::plotTanb(TCanvas& canv, const char* directory, std::string HIG)
   // do the plotting
   plottingTanb(canv, plane_expected, gr_minus2sigma, gr_minus1sigma, gr_expected, gr_plus1sigma, gr_plus2sigma, gr_observed, gr_injected, gr_higgsBands, comparisons, xaxis_, yaxis_, theory_, min_, max_, log_, transparent_, expectedOnly_, MSSMvsSM_, HIG, Brazilian_, azh_); 
   /// setup the CMS Preliminary
+  CMSPrelim2015("","19.7 fb^{-1} (8 TeV)",dataset_.c_str(),0, 0.135, 0.89);
   //TPaveText* cmsprel = new TPaveText(0.145, 0.835+0.06, 0.145+0.30, 0.835+0.16, "NDC");
-  TPaveText* cmsprel = new TPaveText(0.135, 0.735, 0.145+0.30, 0.785, "NDC"); // for "unpublished" in header
-  //TPaveText* cmsprel = new TPaveText(0.0, 0.94, 0.86, 0.995, "NDC");
-  cmsprel->SetBorderSize(   0 );
+/*  TPaveText* cmsprel = new TPaveText(0.135, 0.735, 0.145+0.30, 0.785, "NDC"); // for "unpublished" in header
+  //TPaveText* cmsprel = new TPaveText(0.0, 0.94, 0.86, 0.995, "NDC");  cmsprel->SetBorderSize(   0 );
   cmsprel->SetFillStyle(    0 );
   cmsprel->SetTextAlign(   11 );
   cmsprel->SetTextSize ( 0.03 );
@@ -463,6 +463,7 @@ PlotLimits::plotTanb(TCanvas& canv, const char* directory, std::string HIG)
   cmsprel->SetTextFont (   62 );
   cmsprel->AddText(dataset_.c_str());
   cmsprel->Draw();
+*/
 
   // write results to files
   if(png_){

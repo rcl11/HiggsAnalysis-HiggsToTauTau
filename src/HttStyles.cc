@@ -176,39 +176,103 @@ void SetLegendStyle(TLegend* leg)
   leg->SetBorderSize(0);
 }
 
-void CMSPrelim(const char* dataset, const char* channel, double lowX, double lowY)
+void CMSPrelim2015(const char* typelabel,  const char* lumilabel, const char* channel,int prelimpos,  double lowX, double lowY)
 {
-  /*
-  TPaveText* cmsprel  = new TPaveText(lowX, lowY+0.06, lowX+0.30, lowY+0.16, "NDC");
+  
+  TPaveText* cmsprel;
+  TPaveText* extralabel;
+  if(prelimpos==0){//default: left
+    cmsprel= new TPaveText(0.17, 0.79, 0.47, 0.89, "NDC");
+    cmsprel->SetTextAlign(11);
+    extralabel = new TPaveText(0.17, 0.72, 0.47, 0.82, "NDC");
+    extralabel->SetTextAlign(11);
+  } else if(prelimpos==1){//default: right
+    cmsprel = new TPaveText(0.6, 0.81, 0.9, 0.91, "NDC");
+    cmsprel->SetTextAlign(31);
+    extralabel = new TPaveText(0.6, 0.71, 0.9, 0.81, "NDC");
+    extralabel->SetTextAlign(31);
+  } else {//position CMS out of frame
+    cmsprel = new TPaveText(0.135, 0.91, 0.17, 0.99, "NDC");
+    cmsprel->SetTextAlign(11);
+    extralabel = new TPaveText(0.17, 0.91, 0.27, 0.99, "NDC");
+    extralabel->SetTextAlign(11); 
+  }
   cmsprel->SetBorderSize(   0 );
   cmsprel->SetFillStyle(    0 );
-  cmsprel->SetTextAlign(   12 );
-  cmsprel->SetTextSize ( 0.03 );
+  cmsprel->SetTextSize ( 0.07 );
   cmsprel->SetTextColor(    1 );
-  cmsprel->SetTextFont (   62 );
+  cmsprel->SetTextFont (   61 );
   cmsprel->AddText("CMS");
+  extralabel->SetBorderSize( 0);
+  extralabel->SetFillStyle(  0);
+  extralabel->SetTextSize(0.05);
+  extralabel->SetTextColor(  1);
+  extralabel->SetTextFont(  52);
+  extralabel->AddText(typelabel);
   cmsprel->Draw();
+  extralabel->Draw();
 
-  TPaveText* lumi     = new TPaveText(lowX+0.08, lowY+0.061, lowX+0.45, lowY+0.161, "NDC");
-  */
 
-  TPaveText* lumi  = new TPaveText(lowX, lowY+0.06, lowX+0.30, lowY+0.16, "NDC");
+ // TPaveText* lumi     = new TPaveText(lowX+0.08, lowY+0.061, lowX+0.45, lowY+0.161, "NDC");
+  
+
+ TPaveText* lumi  = new TPaveText(0.6, 0.89, 0.97, 0.99, "NDC");
   lumi->SetBorderSize(   0 );
   lumi->SetFillStyle(    0 );
-  lumi->SetTextAlign(   12 );
+  lumi->SetTextAlign(   31 );
   lumi->SetTextSize ( 0.035 );
   lumi->SetTextColor(    1 );
-  lumi->SetTextFont (   62 );
+  lumi->SetTextFont (   42 );
+  lumi->AddText(lumilabel);
+  lumi->Draw();
+
+  TPaveText* chan     = new TPaveText(lowX, lowY, lowX+0.3, lowY+0.1, "NDC");
+  chan->SetBorderSize(   0 );
+  chan->SetFillStyle(    0 );
+  chan->SetTextAlign(   11 );
+  chan->SetTextSize ( 0.035 );
+  chan->SetTextColor(    1 );
+  chan->SetTextFont (   42 );
+  chan->AddText(channel);
+  chan->Draw();
+
+}
+
+void CMSPrelim(const char* dataset, const char* channel, double lowX, double lowY)
+{
+  
+/*  TPaveText* cmsprel  = new TPaveText(0.17, 0.81, 0.47, 0.91, "NDC");
+  cmsprel->SetBorderSize(   0 );
+  cmsprel->SetFillStyle(    0 );
+  cmsprel->SetTextAlign(   11 );
+  cmsprel->SetTextSize ( 0.04 );
+  cmsprel->SetTextColor(    1 );
+  cmsprel->SetTextFont (   61 );
+  cmsprel->AddText("CMS");
+  cmsprel->Draw();
+*/
+
+ // TPaveText* lumi     = new TPaveText(lowX+0.08, lowY+0.061, lowX+0.45, lowY+0.161, "NDC");
+  
+
+  TPaveText* lumi  = new TPaveText(lowX, lowY+0.058, lowX+0.30, lowY+0.158, "NDC");
+  lumi->SetBorderSize(   0 );
+  lumi->SetFillStyle(    0 );
+  lumi->SetTextAlign(   11 );
+  lumi->SetTextSize ( 0.035 );
+  lumi->SetTextColor(    1 );
+  lumi->SetTextFont (   42 );
   lumi->AddText(dataset);
   lumi->Draw();
 
-  TPaveText* chan     = new TPaveText(lowX+0.68, lowY+0.061, lowX+0.80, lowY+0.161, "NDC");
+  TPaveText* chan     = new TPaveText(lowX+0.52, lowY+0.058, lowX+0.84, lowY+0.158, "NDC");
   chan->SetBorderSize(   0 );
   chan->SetFillStyle(    0 );
-  chan->SetTextAlign(   12 );
-  chan->SetTextSize ( 0.04 );
+  chan->SetTextAlign(   31 );
+  chan->SetTextSize ( 0.035 );
   chan->SetTextColor(    1 );
-  chan->SetTextFont (   62 );
+  chan->SetTextFont (   42 );
   chan->AddText(channel);
   chan->Draw();
 }
+

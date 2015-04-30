@@ -134,8 +134,9 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
 
   
   TPaveText* extra;
+  legendOnRight = true;
   if(!extra_label.empty()){
-    if(!mssm_log) extra = new TPaveText(legendOnRight ? 0.45 : 0.18, 0.60, legendOnRight ? 0.90 : 0.605, 0.70, "NDC");
+    if(!mssm_log) extra = new TPaveText(legendOnRight ? 0.55 : 0.18, 0.60, legendOnRight ? 0.99 : 0.605, 0.70, "NDC");
     else extra = new TPaveText(legendOnRight ? 0.35 : 0.18, 0.59, legendOnRight ? 0.90 : 0.605, 0.70, "NDC");
     extra->SetBorderSize(   0 );
     extra->SetFillStyle (   0 );
@@ -149,7 +150,7 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   }
   // add proper legend
   TLegend* leg;
-  if(!mssm_log) leg = new TLegend(legendOnRight ? 0.45 : 0.18, 0.70, legendOnRight ? 0.95 : (injected ? 0.80 :0.655), 0.90);
+  if(!mssm_log) leg = new TLegend(legendOnRight ? 0.55 : 0.18, 0.70, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
   else leg = new TLegend(legendOnRight ? 0.35 : 0.18, 0.70, legendOnRight ? 0.95 : (injected ? 0.80 :0.655), 0.90);
   leg->SetBorderSize( 0 );
   leg->SetFillStyle( 1001 );

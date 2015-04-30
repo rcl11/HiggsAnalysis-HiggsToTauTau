@@ -3,6 +3,7 @@
 PlotLimits::PlotLimits(const char* output, const edm::ParameterSet& cfg) : 
   output_(output),
   dataset_(cfg.getParameter<std::string>("dataset")),
+  extra_lb_(cfg.getParameter<std::string>("extra")),
   xaxis_(cfg.getParameter<std::string>("xaxis")),
   yaxis_(cfg.getParameter<std::string>("yaxis")),
   min_  (cfg.existsAs<double>("min" ) ? cfg.getParameter<double>("min" ) :    0.),
