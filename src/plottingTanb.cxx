@@ -208,14 +208,19 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   theory1= new TPaveText(0.24, 0.95, 0.76, 0.985, "NDC");
   theory1->SetBorderSize(   0 );
   theory1->SetFillStyle(    0 );
-  theory1->SetTextAlign(   12 );
+  theory1->SetTextAlign(   22 );
   theory1->SetTextSize ( 0.04);
   theory1->SetTextColor(    1 );
   theory1->SetTextFont (   62 );
   theory1->AddText(theory.c_str());
 
   /// add the proper legend
-  TLegend* leg = new TLegend(0.08, 0.79, 0.61, 0.945);
+  TLegend* leg;
+  if(theory!="2HDM type-I" && theory!="2HDM type-II"){
+    leg = new TLegend(0.08, 0.79, 0.61, 0.945);
+  } else {
+    leg = new TLegend(0.29, 0.79, 0.82, 0.945);
+  }
   leg->SetNColumns(2);
   leg->SetBorderSize(  0 );
   leg->SetFillStyle (1001);
