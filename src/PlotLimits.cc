@@ -3,7 +3,9 @@
 PlotLimits::PlotLimits(const char* output, const edm::ParameterSet& cfg) : 
   output_(output),
   dataset_(cfg.getParameter<std::string>("dataset")),
-  extra_lb_(cfg.getParameter<std::string>("extra")),
+  lumilabel_(cfg.existsAs<std::string>("lumi") ? cfg.getParameter<std::string>("lumi") : ""),
+  prelimtext_(cfg.existsAs<std::string>("prelimtext") ? cfg.getParameter<std::string>("prelimtext") : ""),
+  labelinframe_(cfg.existsAs<bool>("inframe") ? cfg.getParameter<bool>("inframe") : true),
   xaxis_(cfg.getParameter<std::string>("xaxis")),
   yaxis_(cfg.getParameter<std::string>("yaxis")),
   min_  (cfg.existsAs<double>("min" ) ? cfg.getParameter<double>("min" ) :    0.),

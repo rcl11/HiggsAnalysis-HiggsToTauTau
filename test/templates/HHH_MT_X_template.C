@@ -185,17 +185,21 @@ HHH_MT_X(bool scaled=true, bool log=true, float min=0.1, float max=-1., string i
 
   // determine category tag
   const char* category = ""; const char* category_extra = ""; const char* category_extra2 = "";
+  const char* dataset;
   if(std::string(directory) == std::string("muTau_2jet0tag"             )){ category = "#mu#tau_{h}";          }
   if(std::string(directory) == std::string("muTau_2jet0tag"             )){ category_extra = "2jet-0tag";          }
+  if(std::string(directory) == std::string("muTau_2jet0tag"             )){ dataset = "#mu#tau_{h}, 2jet-0tag";          }
   if(std::string(directory) == std::string("muTau_2jet1tag"             )){ category = "#mu#tau_{h}";          }
   if(std::string(directory) == std::string("muTau_2jet1tag"             )){ category_extra = "2jet-1tag";       }
+  if(std::string(directory) == std::string("muTau_2jet1tag"             )){ dataset = "#mu#tau_{h}, 2jet-1tag";       }
   if(std::string(directory) == std::string("muTau_2jet2tag"             )){ category = "#mu#tau_{h}";          }
   if(std::string(directory) == std::string("muTau_2jet2tag"             )){ category_extra = "2jet-2tag";         }
+  if(std::string(directory) == std::string("muTau_2jet2tag"             )){ dataset = "#mu#tau_{h}, 2jet-2tag";         }
 
-  const char* dataset;
+
 #ifdef MSSM
   if(std::string(inputfile).find("7TeV")!=std::string::npos){dataset = "#scale[1.5]{CMS}  H#rightarrow hh#rightarrow#tau#tau bb                         4.9 fb^{-1} (7 TeV)";}
-  if(std::string(inputfile).find("8TeV")!=std::string::npos){dataset = "#scale[1.5]{CMS}  H#rightarrow hh#rightarrow#tau#tau bb                         19.7 fb^{-1} (8 TeV)";}
+//  if(std::string(inputfile).find("8TeV")!=std::string::npos){dataset = category+" ,"+category_extra;}
   //if(std::string(inputfile).find("8TeV")!=std::string::npos){dataset = "H#rightarrow hh#rightarrow#tau#tau bb                                       19.7 fb^{-1} (8 TeV)";}
 #else
   if(std::string(inputfile).find("7TeV")!=std::string::npos){dataset = "CMS, 4.9 fb^{-1} at 7 TeV";}
@@ -506,7 +510,8 @@ ggH_SM125->Add(WHToBB_SM125);
   canv->RedrawAxis();
 
   //CMSPrelim(dataset, "#tau_{#mu}#tau_{h}", 0.17, 0.835);
-  CMSPrelim(dataset, "", 0.16, 0.835);
+
+  CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.135, 0.89,true);
 #if defined MSSM
   TPaveText* chan     = new TPaveText(0.20, 0.74+0.061, 0.32, 0.74+0.161, "tlbrNDC");
   if (strcmp(category_extra2,"")!=0) chan     = new TPaveText(0.20, 0.69+0.061, 0.32, 0.74+0.161, "tlbrNDC");
@@ -526,7 +531,7 @@ ggH_SM125->Add(WHToBB_SM125);
 #else
   chan->AddText(category_extra2);
 #endif
-  chan->Draw();
+//  chan->Draw();
 
 /*  TPaveText* cat      = new TPaveText(0.20, 0.71+0.061, 0.32, 0.71+0.161, "NDC");
   cat->SetBorderSize(   0 );

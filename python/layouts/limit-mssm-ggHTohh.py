@@ -2,15 +2,16 @@ import FWCore.ParameterSet.Config as cms
 
 layout = cms.PSet(
     ## dataset
-    dataset = cms.string("CMS, H#rightarrow#tau#tau, 19.7 fb^{-1} at 8 TeV"),	
+    dataset = cms.string("H#rightarrowhh#rightarrow#tau#taubb, #tau_{h}#tau_{h}"),	
+    lumi = cms.string("19.7 fb^{-1} (8 TeV)"),
     #dataset = cms.string("CMS Preliminary, H #rightarrow #tau #tau, 18.3 fb^{-1} at 8 TeV"),
     ## extra labels (below legend)
-    #extra = cms.string("A#rightarrowZh profiled"),	
+    extra = cms.string(""),	
     #extra = cms.string("gg#rightarrow#phi bb set to zero"),
     ## x-axis title
     xaxis = cms.string("m_{H} [GeV]"),
     ## x-axis title
-    yaxis = cms.string("95% CL limit on #sigma(gg#rightarrowH)#timesBR(H#rightarrow hh#rightarrow #tau#tau bb) [pb]"),
+    yaxis = cms.string("95% CL limit on #sigma(gg#rightarrowH)#timesBR(H#rightarrowhh#rightarrow#tau#taubb) [pb]"),
     ## min for plotting
     min = cms.double(0.01),
     ## max for plotting
@@ -44,12 +45,12 @@ layout = cms.PSet(
     ),
     ## SM like limit without the line at sigma=1
     mssm_nolog = cms.bool(True),
+    mssm_ = cms.bool(True),
+    #text_in_corner = cms.bool(True),
     ## plot expected only
     expectedOnly = cms.bool(False),
     ## mass label for the injected signal print band in different layout for signal injected
     injectedMass=cms.string("125"),    
     ## print band in different layout for signal injected
     injected=cms.bool(False),
-    ## SM Higgs as bkg (green band)
-    higgsBG = cms.bool(False),
 )

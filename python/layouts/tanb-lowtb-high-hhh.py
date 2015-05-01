@@ -4,8 +4,12 @@ layout = cms.PSet(
     ## dataset
     #dataset = cms.string("#scale[1.5]{CMS}   h,H,A#rightarrow#tau#tau                     19.7 fb^{-1} (8 TeV) + 4.9 fb^{-1} (7 TeV)"),
     #dataset = cms.string("#scale[1.5]{CMS} (unpublished), h,H,A#rightarrow#tau#tau, 19.7 fb^{-1} (8 TeV) + 4.9 fb^{-1} (7 TeV)"),
-    dataset = cms.string("#scale[1.5]{CMS} Preliminary,H#rightarrowhh#rightarrow#tau#taubb, 19.7 fb^{-1} (8 TeV)"),
+    dataset = cms.string("H#rightarrowhh#rightarrow#tau#taubb"),
     #dataset = cms.string("#scale[1.5]{CMS}   h,H,A#rightarrow#tau#tau                                           18.3 fb^{-1} (8 TeV)"),
+    ## lumi label
+    lumi = cms.string("19.7 fb^{-1} (8 TeV)"),
+    ## preliminary text label
+    prelimtext = cms.string("Unpublished"),
     ## x-axis title
     xaxis = cms.string("m_{A} [GeV]"),
     ## x-axis title
@@ -34,13 +38,13 @@ layout = cms.PSet(
     outputLabel = cms.string("mA-tanb-hhh") ,
     ## define masspoints for limit plot
     masspoints = cms.vdouble(
-    160.
-   ,170.
-   ,180.
-   ,190.
-   ,200.
-   ,210.
-   ,220.
+    #160.
+   #,170.
+   #,180.
+   #,190.
+   #,200.
+   #,210.
+   220.
    ,230.
    ,240.
    ,250.  
