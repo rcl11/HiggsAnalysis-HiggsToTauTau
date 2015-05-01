@@ -447,29 +447,29 @@ PlotLimits::plotTanb(TCanvas& canv, const char* directory, std::string HIG)
       for(int i=0; i<higgsHband1.sum; i++) {gr_higgsHhigh.push_back((TGraph *)((TList *)contourFromTH2(plane_higgsBands[1], 350, 20, false, 200))->At(i));} 
       gr_higgsBands.push_back(gr_higgsHhigh);
     }
-
   }  
   
   // do the plotting
   plottingTanb(canv, plane_expected, gr_minus2sigma, gr_minus1sigma, gr_expected, gr_plus1sigma, gr_plus2sigma, gr_observed, gr_injected, gr_higgsBands, comparisons, xaxis_, yaxis_, theory_, min_, max_, log_, transparent_, expectedOnly_, MSSMvsSM_, HIG, Brazilian_, azh_); 
   /// setup the CMS Preliminary
- 
-  if(labelinframe_){
-    CMSPrelim2015(prelimtext_.c_str(),0.17,0.64,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.135, 0.71,true);
+  if(theory_=="2HDM type-I" || theory_=="2HDM type-II"||theory_=="MSSM low-tan#beta-high scenario"){
+    if(labelinframe_){
+      CMSPrelim2015(prelimtext_.c_str(),0.17,0.64,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.135, 0.71,true);
+    } else{
+      CMSPrelim2015(prelimtext_.c_str(),0.135,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.55, 0.71,false);
+    }
   } else{
-    CMSPrelim2015(prelimtext_.c_str(),0.135,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.55, 0.71,false);
+    //TPaveText* cmsprel = new TPaveText(0.145, 0.835+0.06, 0.145+0.30, 0.835+0.16, "NDC");
+    TPaveText* cmsprel = new TPaveText(0.135, 0.735, 0.145+0.30, 0.785, "NDC"); // for "unpublished" in header
+    //TPaveText* cmsprel = new TPaveText(0.0, 0.94, 0.86, 0.995, "NDC");  cmsprel->SetBorderSize(   0 );
+    cmsprel->SetFillStyle(    0 );
+    cmsprel->SetTextAlign(   11 );
+    cmsprel->SetTextSize ( 0.03 );
+    cmsprel->SetTextColor(    1 );
+    cmsprel->SetTextFont (   62 );
+    cmsprel->AddText(dataset_.c_str());
+    cmsprel->Draw();
   }
-  //TPaveText* cmsprel = new TPaveText(0.145, 0.835+0.06, 0.145+0.30, 0.835+0.16, "NDC");
-/*  TPaveText* cmsprel = new TPaveText(0.135, 0.735, 0.145+0.30, 0.785, "NDC"); // for "unpublished" in header
-  //TPaveText* cmsprel = new TPaveText(0.0, 0.94, 0.86, 0.995, "NDC");  cmsprel->SetBorderSize(   0 );
-  cmsprel->SetFillStyle(    0 );
-  cmsprel->SetTextAlign(   11 );
-  cmsprel->SetTextSize ( 0.03 );
-  cmsprel->SetTextColor(    1 );
-  cmsprel->SetTextFont (   62 );
-  cmsprel->AddText(dataset_.c_str());
-  cmsprel->Draw();
-*/
 
   // write results to files
   if(png_){
