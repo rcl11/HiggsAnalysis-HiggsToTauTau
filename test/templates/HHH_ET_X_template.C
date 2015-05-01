@@ -506,7 +506,7 @@ const char* dataset;
   canv->RedrawAxis();
 
   //CMSPrelim(dataset, "#tau_{e}#tau_{h}", 0.17, 0.835);
-  CMSPrelim2015("", "19.7 fb^{-1} (8 TeV)", dataset, 0, 0.16, 0.89);
+  CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.135, 0.89,true);
 #if defined MSSM
   TPaveText* chan     = new TPaveText(0.20, 0.74+0.061, 0.32, 0.74+0.161, "tlbrNDC");
   if (strcmp(category_extra2,"")!=0) chan     = new TPaveText(0.20, 0.69+0.061, 0.32, 0.74+0.161, "tlbrNDC");

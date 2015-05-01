@@ -134,7 +134,6 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
 
   
   TPaveText* extra;
-  legendOnRight = true;
   if(!extra_label.empty()){
     if(!mssm_log) extra = new TPaveText(legendOnRight ? 0.55 : 0.18, 0.60, legendOnRight ? 0.99 : 0.605, 0.70, "NDC");
     else extra = new TPaveText(legendOnRight ? 0.35 : 0.18, 0.59, legendOnRight ? 0.90 : 0.605, 0.70, "NDC");
@@ -148,6 +147,7 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
     extra->AddText(extra_label.c_str());
     extra->Draw();
   }
+  std::cout<<legendOnRight<<std::endl;
   // add proper legend
   TLegend* leg;
   if(!mssm_log) leg = new TLegend(legendOnRight ? 0.55 : 0.18, 0.70, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
