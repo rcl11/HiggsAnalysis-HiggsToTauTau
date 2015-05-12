@@ -176,6 +176,8 @@ HHH_TT_X_1or2tag(bool scaled=true, bool log=true, float min=0.1, float max=-1., 
   // determine category tag
   const char* category = ""; const char* category_extra = ""; const char* category_extra2 = "";
   const char* dataset;
+  const char* lumilabel="19.7 fb^{-1} (8 TeV)";
+  const char* prelimtext="";
   if(std::string(directory) == std::string("tauTau_2jet0tag")){ category = "#tau_{h}#tau_{h}";           }
   if(std::string(directory) == std::string("tauTau_2jet0tag")){ category_extra= "2jet-0tag";           }
   if(std::string(directory) == std::string("tauTau_2jet0tag")){ dataset= "#tau_{h}#tau_{h}, 2jet-0tag";           }
@@ -234,7 +236,7 @@ HHH_TT_X_1or2tag(bool scaled=true, bool log=true, float min=0.1, float max=-1., 
 #else
   TH1F* data   = refill((TH1F*)input->Get(TString::Format("%s/data_obs", directory)), "data",true);
 #endif
-  InitHist(data, "#bf{m_{H} [GeV]}", "#bf{dN/dm_{H} [1/GeV]}"); InitData(data);
+  InitHist(data, "#bf{m_{H}^{kinfit} [GeV]}", "#bf{dN/dm_{H}^{kinfit} [1/GeV]}"); InitData(data);
 
   TH1F* ref=(TH1F*)Fakes->Clone("ref");
 //  ref->Add(EWK1 );
@@ -428,7 +430,7 @@ HHH_TT_X_1or2tag(bool scaled=true, bool log=true, float min=0.1, float max=-1., 
 
   //CMSPrelim(dataset, "#tau_{h}#tau_{h}", 0.17, 0.835);
 
-  CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.135, 0.89,true);
+  CMSPrelim2015(prelimtext,0.19,0.79,lumilabel,0.97,0.89,dataset, 0.17, 0.89,true);
 #if defined MSSM
   TPaveText* chan     = new TPaveText(0.20, 0.74+0.061, 0.32, 0.74+0.161, "tlbrNDC");
   if (strcmp(category_extra2,"")!=0) chan     = new TPaveText(0.20, 0.69+0.061, 0.32, 0.74+0.161, "tlbrNDC");
