@@ -62,13 +62,13 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
 
   //mass constraint (background color)
   TGraphAsymmErrors* background = new TGraphAsymmErrors();
-  background->SetFillStyle(3005.); //1001
+  background->SetFillStyle(3005); //1001
   background->SetFillColor(backgroundColor->GetNumber());
-  background->SetLineWidth(2);
+  background->SetLineWidth(-402);
   background->SetLineColor(kWhite);  
 
   TGraphAsymmErrors* mHconstraint = new TGraphAsymmErrors();
-  mHconstraint->SetFillStyle(1001.); //1001
+  mHconstraint->SetFillStyle(1001); //1001
   mHconstraint->SetFillColor(kWhite);
   mHconstraint->SetLineWidth(2);
   mHconstraint->SetLineStyle(3);
@@ -212,7 +212,9 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   theory1->SetTextSize ( 0.04);
   theory1->SetTextColor(    1 );
   theory1->SetTextFont (   62 );
-  theory1->AddText(theory.c_str());
+  if(theory=="2HDM type-I"|| theory=="2HDM type-II"){
+    theory1->AddText((theory+", m_{A} = m_{H} = 300 GeV").c_str());
+  } else theory1->AddText(theory.c_str());
 
   /// add the proper legend
   TLegend* leg;
@@ -234,7 +236,7 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
     if(!Brazilian) {
       if(observed[0]) observed[0]->SetFillColor(obs->GetNumber());
     }
-    if(observed[0]) leg->AddEntry(observed[0], "Observed", "FL");
+    if(observed[0]) leg->AddEntry(observed[0], "Observed", "F");
   }
   else leg->AddEntry(emptybackground,"","F");
   if(minus1sigma[0]) leg->AddEntry(minus1sigma[0], "#pm 1#sigma Expected","F");
@@ -264,13 +266,13 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   if(log) {
     if(theory=="MSSM low-m_{H} scenario") leg2->AddEntry(background, "m^{MSSM}_{H} #scale[1.7]{#bf{#neq}} 125#pm3 GeV", "F");
     else leg2->AddEntry(background, "m^{MSSM}_{h} #scale[1.7]{#bf{#neq}} 125#pm3 GeV", "F");
-    if(theory=="MSSM low-tan#beta-high scenario"&&!azh) leg2->AddEntry(mHconstraint," m^{MSSM}_{H} #notin [260,350] GeV","F");
+    if(theory=="MSSM low tan#beta scenario"&&!azh) leg2->AddEntry(mHconstraint," m^{MSSM}_{H} #notin [260,350] GeV","F");
     else leg2->AddEntry(emptybackground,"","F");
   }
   else {
     if(theory=="MSSM low-m_{H} scenario") leg2->AddEntry(background, "m^{MSSM}_{H} #scale[1.7]{#bf{#neq}} 125#pm3 GeV", "F");
-    else leg2->AddEntry(background, "m^{MSSM}_{h} #scale[1.7]{#bf{ #neq}} 125#pm3 GeV", "FL");
-    if(theory=="MSSM low-tan#beta-high scenario"&&!azh) leg2->AddEntry(mHconstraint," m^{MSSM}_{H} #notin [260,350] GeV","F");
+    else leg2->AddEntry(background, "m^{MSSM}_{h} #scale[1.7]{#bf{ #neq}} 125#pm3 GeV", "F");
+    if(theory=="MSSM low tan#beta scenario"&&!azh) leg2->AddEntry(mHconstraint," m^{MSSM}_{H} #notin [260,350] GeV","F");
     else leg2->AddEntry(emptybackground,"","F");
   }
   if(theory!="2HDM type-I" && theory!="2HDM type-II") leg2->Draw("same");
@@ -280,7 +282,7 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   legline->SetLineWidth(3);
   legline->SetLineColor(backgroundColor->GetNumber());
   //if(theory!="2HDM type-I" && theory!="2HDM type-II") legline->DrawLineNDC(leg2->GetX1()+0.015, leg2->GetY2()-0.01, leg2->GetX1()+0.072, leg2->GetY2()-0.01);
-  if(theory!="2HDM type-I" && theory!="2HDM type-II") legline->DrawLineNDC(leg2->GetX1()+0.015, leg2->GetY2()-0.055, leg2->GetX1()+0.072, leg2->GetY2()-0.055);
+  if(theory!="2HDM type-I" && theory!="2HDM type-II") legline->DrawLineNDC(leg2->GetX1()+0.014, leg2->GetY2()-0.062, leg2->GetX1()+0.073, leg2->GetY2()-0.062);
 
   theory1->Draw("same");
 

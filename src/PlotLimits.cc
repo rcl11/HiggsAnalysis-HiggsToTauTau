@@ -5,6 +5,7 @@ PlotLimits::PlotLimits(const char* output, const edm::ParameterSet& cfg) :
   dataset_(cfg.getParameter<std::string>("dataset")),
   lumilabel_(cfg.existsAs<std::string>("lumi") ? cfg.getParameter<std::string>("lumi") : ""),
   prelimtext_(cfg.existsAs<std::string>("prelimtext") ? cfg.getParameter<std::string>("prelimtext") : ""),
+  analabel_(cfg.existsAs<std::string>("analabel") ? cfg.getParameter<std::string>("analabel") : ""),
   labelinframe_(cfg.existsAs<bool>("inframe") ? cfg.getParameter<bool>("inframe") : true),
   xaxis_(cfg.getParameter<std::string>("xaxis")),
   yaxis_(cfg.getParameter<std::string>("yaxis")),

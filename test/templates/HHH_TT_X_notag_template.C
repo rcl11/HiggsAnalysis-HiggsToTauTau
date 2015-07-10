@@ -9,6 +9,7 @@
 #include <TSystem.h>
 #include <Rtypes.h>
 
+#include "Math/QuantFuncMathCore.h"
 #include <TMath.h>
 #include <TAxis.h>
 #include <TCanvas.h>
@@ -66,6 +67,7 @@ TH1F* refill(TH1F* hin, const char* sample, bool data=false)
     exit(1);  
   }
   TH1F* hout = (TH1F*)hin->Clone(); hout->Clear();
+//  if(data) hout->GetSumw2()->Set(0);
   for(int i=0; i<hout->GetNbinsX(); ++i){
     if(data){
 #if defined MSSM
@@ -81,6 +83,21 @@ TH1F* refill(TH1F* hin, const char* sample, bool data=false)
       hout->SetBinError(i+1, 0.);
     }
   }
+  /*if(data){
+   for(int nbin=1;nbin<=hout->GetNbinsX();++nbin){
+    if(hout->GetBinLowEdge(nbin) < 250 && hout->GetBinContent(nbin)==0){
+      hout->SetBinContent(nbin,10000);
+      hout->SetBinError(nbin,0);
+    }
+   }
+
+   for(int nbin=1;nbin<=hout->GetNbinsX();++nbin){
+    if(hout->GetBinLowEdge(nbin) >= 250 && hout->GetBinContent(nbin)==0){
+     hout->SetBinError(nbin,ROOT::Math::gamma_quantile_c((1-0.6827)/2,1,1)/hin->GetBinWidth(nbin)); 
+  }
+ }
+ }*/
+
   return hout;
 }
 
@@ -177,7 +194,7 @@ HHH_TT_X_notag(bool scaled=true, bool log=true, float min=0.1, float max=-1., st
   const char* category = ""; const char* category_extra = ""; const char* category_extra2 = "";
   const char* dataset;
   const char* lumilabel="19.7 fb^{-1} (8 TeV)";
-  const char* prelimtext="";
+  const char* prelimtext="Preliminary";
   if(std::string(directory) == std::string("tauTau_2jet0tag")){ category = "#tau_{h}#tau_{h}";           }
   if(std::string(directory) == std::string("tauTau_2jet0tag")){ category_extra= "2jet-0tag";           }
   if(std::string(directory) == std::string("tauTau_2jet0tag")){ dataset= "#tau_{h}#tau_{h}, 2jet-0tag";           }
@@ -233,7 +250,7 @@ HHH_TT_X_notag(bool scaled=true, bool log=true, float min=0.1, float max=-1., st
 #else
   TH1F* data   = refill((TH1F*)input->Get(TString::Format("%s/data_obs", directory)), "data",true);
 #endif
-  InitHist(data, "#bf{m_{H}^{kinfit} [GeV]}", "#bf{dN/dm_{H}^{kinfit} [1/GeV]}"); InitData(data);
+  InitHist(data, "#bf{M_{H}^{kinfit} (GeV)}", "#bf{dN/dM_{H}^{kinfit} (1/GeV)}"); InitData(data);
 
   TH1F* ref=(TH1F*)Fakes->Clone("ref");
   ref->Add(EWK1 );
@@ -385,8 +402,12 @@ HHH_TT_X_notag(bool scaled=true, bool log=true, float min=0.1, float max=-1., st
 
   TH1F* errorBand = (TH1F*)Ztt ->Clone();
   errorBand  ->SetMarkerSize(0);
-  errorBand  ->SetFillColor(13);
-  errorBand  ->SetFillStyle(3013);
+  TColor* adapt = gROOT->GetColor(12);
+  int new_idx=gROOT->GetListOfColors()->GetSize()+1;
+  TColor* trans = new TColor(new_idx, adapt->GetRed(), adapt->GetGreen(), adapt->GetBlue(),"",0.5);
+  trans->SetName(Form("userColor%i", new_idx));
+  errorBand  ->SetFillColor(new_idx);
+  errorBand  ->SetFillStyle(3001);
   errorBand  ->SetLineWidth(1);
   for(int idx=0; idx<errorBand->GetNbinsX(); ++idx){
     if(errorBand->GetBinContent(idx)>0){
@@ -424,12 +445,19 @@ HHH_TT_X_notag(bool scaled=true, bool log=true, float min=0.1, float max=-1., st
     ggH_SM125->Draw("histsame");
 */
   }
+
+  /*data->SetBinErrorOption(TH1::kPoisson);
+  data->SetBinContent(1,10000);
+  data->SetBinError(1,0);
+  data->GetSumw2()->Set(0);
+*/
   data->Draw("esame");
   canv->RedrawAxis();
 
   //CMSPrelim(dataset, "#tau_{h}#tau_{h}", 0.17, 0.835);
 
-  CMSPrelim2015(prelimtext,0.19,0.79,lumilabel,0.97,0.89,dataset, 0.17, 0.89,true);
+  //CMSPrelim2015(prelimtext,0.19,0.79,lumilabel,0.97,0.89,dataset, 0.19, 0.74,true);
+  CMSPrelim2015(prelimtext,0.19,0.81,lumilabel,0.97,0.89,dataset, 0.19, 0.73,true);
 #if defined MSSM
   TPaveText* chan     = new TPaveText(0.20, 0.74+0.061, 0.32, 0.74+0.161, "tlbrNDC");
   if (strcmp(category_extra2,"")!=0) chan     = new TPaveText(0.20, 0.69+0.061, 0.32, 0.74+0.161, "tlbrNDC");
@@ -479,21 +507,21 @@ HHH_TT_X_notag(bool scaled=true, bool log=true, float min=0.1, float max=-1., st
   massA->SetTextSize ( 0.03 );
   massA->SetTextColor(    1 );
   massA->SetTextFont (   62 );
-  massA->AddText("MSSM low-tan#beta-high scenario");
-  massA->AddText("m_{H}=$MH GeV, tan#beta=$TANB");
+  massA->AddText("MSSM low tan#beta scenario");
+  massA->AddText("m_{H}= $MH GeV, tan#beta= $TANB");
   massA->Draw();
 #endif
   
 #ifdef MSSM
   TLegend* leg = new TLegend(0.53, 0.60, 0.95, 0.90);
   SetLegendStyle(leg);
-  leg->AddEntry(ggHTohhTo2Tau2B  , TString::Format("%0.f #times H#rightarrowhh#rightarrow#tau#taubb", SIGNAL_SCALE) , "L" );
+  leg->AddEntry(ggHTohhTo2Tau2B  , TString::Format("%0.f #times H#rightarrowhh#rightarrowbb#tau#tau", SIGNAL_SCALE) , "L" );
   //leg->AddEntry(ggH_SM125, TString::Format("%0.f #times SM H(125 GeV) #rightarrow #tau#tau/bb", SIGNAL_SCALE), "L");
 #endif
 #ifdef ASIMOV
   leg->AddEntry(data , "sum(bkg) + H(125)"              , "LP");
 #else
-  leg->AddEntry(data , "Observed"                       , "LP");
+  leg->AddEntry(data , "Observed"                       , "LPE");
 #endif
   leg->AddEntry(Ztt  , "Z#rightarrow#tau#tau"           , "F" );
   leg->AddEntry(EWK  , "Electroweak"                    , "F" );

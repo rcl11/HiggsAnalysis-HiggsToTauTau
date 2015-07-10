@@ -26,6 +26,6 @@ void SetLegendStyle(TLegend* leg);
 void CMSPrelim(const char* dataset, const char* channel, double lowX=0.4, double lowY=0.74);
 /// CMS preliminary, lumi and channel in new style
 //void CMSPrelim2015(const char* typelabel, const char* lumilabel, const char* channel, int prelimpos, double lowX, double lowY);
-void CMSPrelim2015(const char* typelabel, double cmsLowX, double cmsLowY,  const char* lumilabel, double lumiHighX, double lumiLowY,  const char* channel, double channelLowX, double channelLowY, bool cmsinframe=false);
+void CMSPrelim2015(const char* typelabel, double cmsLowX, double cmsLowY,  const char* lumilabel, double lumiHighX, double lumiLowY,  const char* channel, double channelLowX, double channelLowY, bool cmsinframe=false, const char* analabel = "", double anaLowX = 0.135, double anaLowY=0.89);
 
 #endif

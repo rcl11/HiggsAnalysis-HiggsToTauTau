@@ -190,6 +190,7 @@ class PlotLimits {
   std::string lumilabel_;
   /// extra text for CMS stamp (preliminary/unpublished)
   std::string prelimtext_;
+  std::string analabel_;
   /// draw label inside frame
   bool labelinframe_;
   /// string for x-axis title

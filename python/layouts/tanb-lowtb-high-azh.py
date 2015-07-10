@@ -11,13 +11,13 @@ layout = cms.PSet(
     ## preliminary label
     prelimtext = cms.string("Unpublished"),
     ## x-axis title
-    xaxis = cms.string("m_{A} [GeV]"),
+    xaxis = cms.string("m_{A} (GeV)"),
     ## x-axis title
     yaxis = cms.string("#bf{tan#beta}"),
     ## theory label 
-    theory = cms.string("MSSM low-tan#beta-high scenario"),
+    theory = cms.string("MSSM low tan#beta scenario"),
     ## min for plotting
-    min = cms.double(1.05),
+    min = cms.double(1.0),
     ## max for plotting
     max = cms.double(4),
     ## min for plotting

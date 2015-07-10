@@ -40,7 +40,9 @@ PlotLimits::plotLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmEr
   plottingLimit(canv, innerBand, outerBand, expected, observed, unit, xaxis_, yaxis_, 0, min, max, log_, PLOT, injectedMass_, mssm_, extra_);
   // setup CMS Preliminary
   //CMSPrelim(dataset_.c_str(), "", 0.160, 0.835);
-  CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.135, 0.89,labelinframe_);
+  //CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.135, 0.89,labelinframe_);
+  CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.17, 0.69,labelinframe_, analabel_.c_str(), 0.135,0.89);
+  //CMSPrelim2015(prelimtext_.c_str(),0.17,0.79,lumilabel_.c_str(),0.97,0.89,dataset_.c_str(), 0.17, 0.74,labelinframe_, analabel_.c_str(), 0.135,0.89);
 
   /*
   TPaveText* chan     = new TPaveText(0.60, 0.82, 0.80, 0.92, "NDC");

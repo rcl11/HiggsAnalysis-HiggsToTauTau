@@ -38,6 +38,7 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   }
   // draw a frame to define the range
   TH1F* hr=canv.DrawFrame(expected->GetX()[0]-shift_label*.01, min, expected->GetX()[expected->GetN()-1]+.01, max);
+//  TH1F* hr=canv.DrawFrame(expected->GetX()[0], min, expected->GetX()[expected->GetN()-1]+.01, max);
   // format x axis
   hr->SetXTitle(xaxis.c_str());
   hr->GetXaxis()->SetLabelFont(62);
@@ -100,13 +101,9 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
       expected->Draw("PL");
     }
     else{
-      expected->SetLineColor(kRed);
       expected->SetLineWidth(3);
-      expected->SetLineStyle(1);
-      if(mssm_log){
       expected->SetLineColor(kBlack);
       expected->SetLineStyle(2);
-      }
       expected->Draw("L");
     }
   }
@@ -150,7 +147,7 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   std::cout<<legendOnRight<<std::endl;
   // add proper legend
   TLegend* leg;
-  if(!mssm_log) leg = new TLegend(legendOnRight ? 0.55 : 0.18, 0.70, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
+  if(!mssm_log) leg = new TLegend(legendOnRight ? 0.5 : 0.18, 0.65, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
   else leg = new TLegend(legendOnRight ? 0.35 : 0.18, 0.70, legendOnRight ? 0.95 : (injected ? 0.80 :0.655), 0.90);
   leg->SetBorderSize( 0 );
   leg->SetFillStyle( 1001 );

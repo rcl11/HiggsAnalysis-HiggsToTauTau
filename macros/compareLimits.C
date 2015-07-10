@@ -61,7 +61,8 @@ std::string legendEntry(const std::string& channel){
   if(channel==std::string("ee"        )) title = std::string("ee");
   if(channel==std::string("vhtt"      )) title = std::string("VH#rightarrow#tau#tau");
   if(channel==std::string("htt"       )) title = std::string("H#rightarrow#tau#tau");
-  if(channel==std::string("cmb"       )) title = std::string("H#rightarrow#tau#tau+VH#rightarrow#tau#tau");
+//  if(channel==std::string("cmb"       )) title = std::string("H#rightarrow#tau#tau+VH#rightarrow#tau#tau");
+  if(channel==std::string("cmb"       )) title = std::string("Combined");
   if(channel==std::string("0jet"      )) title = std::string("0-Jet");
   if(channel==std::string("1jet"      )) title = std::string("1-Jet");
   if(channel==std::string("2jet"      )) title = std::string("2-Jet (VBF)");
@@ -80,7 +81,7 @@ std::string legendEntry(const std::string& channel){
   return title;
 }
 
-void compareLimits(const char* filename, const char* channelstr, bool expected, bool observed, const char* type, double minimum=0., double maximum=20., bool log=false, const char* label="#scale[1.5]{CMS}   h,H,A#rightarrow#tau#tau                     19.7 fb^{-1} (8 TeV) + 4.9 fb^{-1} (7 TeV)", bool legendOnRight=true, bool legendOnTop=true, bool ggH=true)
+void compareLimits(const char* filename, const char* channelstr, bool expected, bool observed, const char* type, double minimum=0., double maximum=20., bool log=false, const char* label="H#rightarrowhh#rightarrow#tau#taubb", bool legendOnRight=true, bool legendOnTop=true, bool ggH=true)
 {
   SetStyle();
 
@@ -94,10 +95,10 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
   colors["nobtag"     ] = kBlue; 
   colors["em"         ] = kBlue;
   colors["et"         ] = kRed;
-  colors["mt"         ] = kGreen;
+  colors["mt"         ] = kGreen+3;
   colors["mm"         ] = kMagenta;
   colors["ee"         ] = kCyan;
-  colors["tt"         ] = kMagenta+3;
+  colors["tt"         ] = kBlue;
   colors["vhtt"       ] = kCyan-6;
   colors["cmb"        ] = kBlack;
   colors["htt"        ] = kBlack;
@@ -167,7 +168,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
 	x_title = std::string("m_{A} [GeV]");
       }
       else if(std::string(type) == std::string("mssm-xsec")){
-	x_title = std::string("m_{#phi} [GeV]");
+	x_title = std::string("m_{H} [GeV]");
       }
       else{
 	x_title = std::string("m_{H} [GeV]");
@@ -177,6 +178,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       hexp[i]->GetXaxis()->SetTitleFont(62);
       hexp[i]->GetXaxis()->SetTitleColor(1);
       hexp[i]->GetXaxis()->SetTitleOffset(1.05);
+      //hexp[i]->GetXaxis()->SetNdivisions(3,"X");
       if((std::string(type) == std::string("mssm-xsec") || std::string(type) == std::string("mssm-tanb")) && log){
 	hexp[i]->GetXaxis()->SetNdivisions(50005, "X");
 	hexp[i]->GetXaxis()->SetMoreLogLabels();
@@ -196,7 +198,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       // format y-axis
       std::string y_title;
       if( std::string(type) == std::string("mssm-xsec") ){
-	if(ggH) y_title = std::string("95% CL limit on #sigma(gg#rightarrow#phi)#timesBR [pb]");
+	if(ggH) y_title = std::string("95% CL limit on #sigma(gg#rightarrowH)#timesBR(H#rightarrowhh#rightarrow#tau#taubb) [pb]");
 	else y_title = std::string("95% CL limit on #sigma(gg#rightarrowbb#phi)#timesBR [pb]");
       }
       else if(  std::string(type) == std::string("mssm-tanb")  ){
@@ -208,8 +210,9 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       hexp[i]->GetYaxis()->SetTitle(y_title.c_str());
       hexp[i]->GetYaxis()->SetLabelFont(62);
       hexp[i]->GetYaxis()->SetTitleFont(62);
-      hexp[i]->GetYaxis()->SetTitleOffset(1.05);
-      hexp[i]->GetYaxis()->SetLabelSize(0.03);
+      hexp[i]->GetYaxis()->SetTitleOffset(1.3);
+      hexp[i]->GetYaxis()->SetLabelSize(0.04);
+      hexp[i]->GetYaxis()->SetTitleSize(0.04);
     }
     hexp[i]->SetLineStyle(11.);
     hexp[i]->SetLineWidth( 3.); 
@@ -233,7 +236,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
 	x_title = std::string("m_{A} [GeV]");
       }
       else if(std::string(type) == std::string("mssm-xsec")){
-	x_title = std::string("m_{#phi} [GeV]");
+	x_title = std::string("m_{H} [GeV]");
       }
       else{
 	x_title = std::string("m_{H} [GeV]");
@@ -247,7 +250,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
 	hobs[i]->GetXaxis()->SetNdivisions(50005, "X");
 	hobs[i]->GetXaxis()->SetMoreLogLabels();
 	hobs[i]->GetXaxis()->SetNoExponent();
-	hobs[i]->GetXaxis()->SetLabelSize(0.040);
+	hobs[i]->GetXaxis()->SetLabelSize(0.020);
       }
       hobs[i]->GetXaxis()->SetLimits(hobs[i]->GetX()[0]-.1, hobs[i]->GetX()[hobs[i]->GetN()-1]+.1);
       if(std::string(type) == std::string("mssm-xsec") || std::string(type) == std::string("mssm-tanb")){
@@ -262,8 +265,8 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       // format y-axis
       std::string y_title;
       if( std::string(type) == std::string("mssm-xsec") ){
-	if(ggH) y_title = std::string("95% CL limit on #sigma#font[42]{(gg#phi)}#upoint#font[52]{B}#font[42]{(#phi#rightarrow#tau#tau)} [pb]");
-	else y_title = std::string("95% CL limit on #sigma#font[42]{(bb#phi)}#upoint#font[52]{B}#font[42]{(#phi#rightarrow#tau#tau)} [pb]");
+	if(ggH) y_title = std::string("95% CL limit on #sigma(gg#rightarrowH)#timesBR(H#rightarrowhh#rightarrow#tau#taubb) [pb]");
+	else y_title = std::string("95% CL limit on #sigma(gg#rightarrowH)#times#BR(H#rightarrowhh#rightarrow#tau#taubb) [pb]");
       }
       else if(  std::string(type) == std::string("mssm-tanb")  ){
 	y_title = std::string("#bf{tan#beta}");
@@ -273,8 +276,10 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       }
       hobs[i]->GetYaxis()->SetTitle(y_title.c_str());
       hobs[i]->GetYaxis()->SetLabelFont(62);
-      hobs[i]->GetYaxis()->SetTitleOffset(1.05);
-      hobs[i]->GetYaxis()->SetLabelSize(0.03);
+      hobs[i]->GetYaxis()->SetTitleFont(62);
+      hobs[i]->GetYaxis()->SetTitleOffset(1.3);
+      hobs[i]->GetYaxis()->SetLabelSize(0.04);
+      hobs[i]->GetYaxis()->SetTitleSize(0.04);
     }
     hobs[i]->SetLineStyle(11.);
     hobs[i]->SetLineWidth( 3.); 
@@ -297,8 +302,8 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
     extra->SetTextSize  (0.04 );
     extra->SetTextColor (   1 );
     extra->SetTextFont  (  62 );
-    if(ggH) extra->AddText("gg#phi");
-    else extra->AddText("bb#phi");
+//    if(ggH) extra->AddText("gg#phi");
+ //   else extra->AddText("bb#phi");
     extra->Draw();
   }
 
@@ -320,11 +325,12 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       /// setup the CMS Preliminary
       if(std::string(type) == std::string("mssm-tanb")){
 	CMSPrelim(label, "", 0.15, 0.835);
-	leg1 = new TLegend(legendOnRight?0.60:0.20, hobs.size()<5 ? (legendOnTop?0.90:0.40)-0.04*hobs.size() : (legendOnTop?0.6:0.2), legendOnRight?0.94:0.45, (legendOnTop?0.90:0.40));
+	leg1 = new TLegend(legendOnRight?0.70:0.20, hobs.size()<5 ? (legendOnTop?0.90:0.40)-0.04*hobs.size() : (legendOnTop?0.6:0.2), legendOnRight?0.94:0.45, (legendOnTop?0.90:0.40));
 	   }
       else{
-	CMSPrelim(label, "", 0.135, 0.835);
-	leg1 = new TLegend(legendOnRight ? 0.50 : 0.20, hobs.size()<5 ? 0.90-0.08*hobs.size() : 0.6, legendOnRight ? 0.94 : 0.64, 0.90);
+	//CMSPrelim(label, "", 0.135, 0.835);
+        CMSPrelim2015("Unpublished",0.17,0.79,"19.7 fb^{-1} (8 TeV)",0.97,0.89,label, 0.135, 0.89,true);
+	leg1 = new TLegend(legendOnRight ? 0.70 : 0.20, hobs.size()<5 ? 0.90-0.08*hobs.size() : 0.6, legendOnRight ? 0.94 : 0.64, 0.90);
       }
     }
     if(std::string(type) == std::string("mssm-tanb")) {leg1->SetTextSize(0.03);}
@@ -333,7 +339,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
     leg1->SetFillStyle ( 1001 );
     //leg1->SetFillColor ( 0 );
     leg1->SetFillColor (kWhite);
-    leg1->SetHeader( "#bf{observed}" );
+    leg1->SetHeader( "#bf{Observed limit}" );
     for(unsigned int i=0; i<hobs.size(); ++i){
       leg1->AddEntry( hobs[i] , channel(channels[i]) ? legendEntry(channels[i]).c_str() : legendEntry(channels[i]).append("-Channel").c_str(),  "PL" );
     }
@@ -357,11 +363,12 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
       /// setup the CMS Preliminary
       if(std::string(type) == std::string("mssm-tanb")){
 	CMSPrelim(label, "", 0.15, 0.835);
-	leg0 = new TLegend(legendOnRight?0.60:0.20, hexp.size()<5 ? (legendOnTop?0.90:0.40)-0.04*hexp.size() : (legendOnTop?0.6:0.2), legendOnRight?0.94:0.45, (legendOnTop?0.90:0.40));
+	leg0 = new TLegend(legendOnRight?0.70:0.20, hexp.size()<5 ? (legendOnTop?0.90:0.40)-0.04*hexp.size() : (legendOnTop?0.6:0.2), legendOnRight?0.99:0.45, (legendOnTop?0.90:0.40));
 	   }
       else{
-	CMSPrelim(label, "", 0.135, 0.835);
-	leg0 = new TLegend(legendOnRight ? 0.50 : 0.20, hexp.size()<5 ? 0.90-0.06*hexp.size() : 0.6, legendOnRight ? 0.74 : 0.63, 0.90);
+	//CMSPrelim(label, "", 0.135, 0.835);
+        CMSPrelim2015("Unpublished",0.17,0.79,"19.7 fb^{-1} (8 TeV)",0.97,0.89,label, 0.135, 0.89,true);
+	leg0 = new TLegend(legendOnRight ? 0.70 : 0.20, hexp.size()<5 ? 0.90-0.06*hexp.size() : 0.6, legendOnRight ? 0.94 : 0.63, 0.90);
 	//leg0 = new TLegend(legendOnRight ? 0.50 : 0.20, hexp.size()<5 ? 0.90-0.08*hexp.size() : 0.6, legendOnRight ? 0.94 : 0.80, 0.90);
       }
     }
@@ -369,7 +376,7 @@ void compareLimits(const char* filename, const char* channelstr, bool expected, 
     leg0->SetBorderSize( 0 );
     leg0->SetFillStyle ( 1001 );
     leg0->SetFillColor (kWhite);
-    leg0->SetHeader( "#bf{expected}" );
+    leg0->SetHeader( "#bf{Expected limit}" );
     for(unsigned int i=0; i<hexp.size(); ++i){
       leg0->AddEntry( hexp[i] , channel(channels[i]) ? legendEntry(channels[i]).c_str() : legendEntry(channels[i]).append("-Channel").c_str(),  "PL" );
     }

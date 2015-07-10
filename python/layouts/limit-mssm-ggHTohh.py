@@ -44,7 +44,7 @@ layout = cms.PSet(
    ,350.
     ),
     ## SM like limit without the line at sigma=1
-    mssm_nolog = cms.bool(True),
+#    mssm_nolog = cms.bool(True),
     mssm_ = cms.bool(True),
     ## plot expected only
     expectedOnly = cms.bool(False),
