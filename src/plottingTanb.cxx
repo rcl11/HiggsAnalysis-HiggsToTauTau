@@ -262,7 +262,8 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   leg2->SetFillColor (kWhite);
   leg2->SetLineWidth (2);
   leg2->SetLineColor (kBlack);
-  leg2->SetHeader("Mass constraint:");
+//  leg2->SetHeader("Mass constraint:");
+  leg2->SetHeader("");
   if(log) {
     if(theory=="MSSM low-m_{H} scenario") leg2->AddEntry(background, "m^{MSSM}_{H} #scale[1.7]{#bf{#neq}} 125#pm3 GeV", "F");
     else leg2->AddEntry(background, "m^{MSSM}_{h} #scale[1.7]{#bf{#neq}} 125#pm3 GeV", "F");
