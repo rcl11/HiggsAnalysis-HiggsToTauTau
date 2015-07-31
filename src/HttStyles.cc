@@ -187,22 +187,18 @@ void CMSPrelim2015(const char* typelabel, double cmsLowX, double cmsLowY, const 
     extralabel= new TPaveText(cmsLowX, cmsLowY-0.04, cmsLowX+0.3, cmsLowY+0.05,"NDC");
   }
   else {
-    extralabel= new TPaveText(cmsLowX+0.125, cmsLowY, cmsLowX+0.28, cmsLowY+0.1,"NDC");
-    //extralabel= new TPaveText(cmsLowX+0.145, cmsLowY, cmsLowX+0.28, cmsLowY+0.1,"NDC");
-    //extralabel= new TPaveText(cmsLowX+0.165, cmsLowY, cmsLowX+0.3, cmsLowY+0.1,"NDC");
+    extralabel= new TPaveText(cmsLowX+0.145, cmsLowY, cmsLowX+0.3, cmsLowY+0.1,"NDC");
   }
     extralabel->SetTextAlign(11);
   cmsprel->SetBorderSize(   0 );
   cmsprel->SetFillStyle(    0 );
-  cmsprel->SetTextSize(0.05);
-//  cmsprel->SetTextSize ( 0.06 );
+  cmsprel->SetTextSize ( 0.06 );
   cmsprel->SetTextColor(    1 );
   cmsprel->SetTextFont (   61 );
   cmsprel->AddText("CMS");
   extralabel->SetBorderSize( 0);
   extralabel->SetFillStyle(  0);
-  extralabel->SetTextSize(0.035);
- // extralabel->SetTextSize(0.04);
+  extralabel->SetTextSize(0.04);
   extralabel->SetTextColor(  1);
   extralabel->SetTextFont(  52);
   extralabel->AddText(typelabel);
@@ -214,10 +210,11 @@ void CMSPrelim2015(const char* typelabel, double cmsLowX, double cmsLowY, const 
   lumi->SetBorderSize(   0 );
   lumi->SetFillStyle(    0 );
   lumi->SetTextAlign(   31 );
-  lumi->SetTextSize(0.03);
- // lumi->SetTextSize ( 0.035 );
-  //lumi->SetTextSize (0.04);
-  //lumi->SetTextSize ( 0.045 );
+  if(cmsinframe){
+  lumi->SetTextSize(0.045);
+  } else {
+  lumi->SetTextSize ( 0.035 ); 
+  }
   lumi->SetTextColor(    1 );
   lumi->SetTextFont (   42 );
   lumi->AddText(lumilabel);
@@ -227,9 +224,11 @@ void CMSPrelim2015(const char* typelabel, double cmsLowX, double cmsLowY, const 
   chan->SetBorderSize(   0 );
   chan->SetFillStyle(    0 );
   chan->SetTextAlign(   11 );
-  chan->SetTextSize ( 0.027 );
-//  chan->SetTextSize(0.03);
- //chan->SetTextSize ( 0.04 );
+  if(cmsinframe){
+  chan->SetTextSize(0.04);
+  } else {
+  chan->SetTextSize(0.03); 
+  }
   chan->SetTextColor(    1 );
   chan->SetTextFont (   62 );
   chan->AddText(channel);
@@ -239,9 +238,9 @@ void CMSPrelim2015(const char* typelabel, double cmsLowX, double cmsLowY, const 
   analab->SetBorderSize(   0 );
   analab->SetFillStyle(    0 );
   analab->SetTextAlign(   11 );
-  analab->SetTextSize(0.03);
+  //analab->SetTextSize(0.03);
   //analab->SetTextSize ( 0.03 );
-  //analab->SetTextSize ( 0.04 );
+  analab->SetTextSize ( 0.04 );
   analab->SetTextColor(    1 );
   analab->SetTextFont (   42 );
   analab->AddText(analabel);

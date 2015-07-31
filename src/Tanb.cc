@@ -456,9 +456,11 @@ PlotLimits::plotTanb(TCanvas& canv, const char* directory, std::string HIG)
     if(labelinframe_){
       CMSPrelim2015(prelimtext_.c_str(),0.17,0.64,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.135, 0.71,true);
     } else{
-      //CMSPrelim2015(prelimtext_.c_str(),0.135,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.3, 0.71,false);
-     // CMSPrelim2015(prelimtext_.c_str(),0.135,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.5, 0.71,false);
-      CMSPrelim2015(prelimtext_.c_str(),0.13,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.425, 0.71,false);
+     if(strcmp(prelimtext_.c_str(),"") != 0){
+      CMSPrelim2015(prelimtext_.c_str(),0.135,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.5, 0.71,false); 
+     } else {
+      CMSPrelim2015(prelimtext_.c_str(),0.135,0.71,lumilabel_.c_str(),0.97,0.71,dataset_.c_str(), 0.3, 0.71,false); // Enable this one if 
+    }
     }
   } else{
     //TPaveText* cmsprel = new TPaveText(0.145, 0.835+0.06, 0.145+0.30, 0.835+0.16, "NDC");
@@ -481,6 +483,7 @@ PlotLimits::plotTanb(TCanvas& canv, const char* directory, std::string HIG)
     canv.Print(std::string(output_).append("_").append(extralabel_).append(label_).append(".pdf").c_str());
     canv.Print(std::string(output_).append("_").append(extralabel_).append(label_).append(".eps").c_str());
   }
+  canv.SaveAs(std::string(output_).append("_").append(extralabel_).append(label_).append(".C").c_str());
   // write txt and tex files
   if(txt_){
     print(std::string(output_).append("_").append(extralabel_).append(label_).c_str(), v_graph_minus2sigma, v_graph_minus1sigma, v_graph_expected, v_graph_plus1sigma, v_graph_plus2sigma, v_graph_observed, tanbLow, tanbHigh, masses, "txt");

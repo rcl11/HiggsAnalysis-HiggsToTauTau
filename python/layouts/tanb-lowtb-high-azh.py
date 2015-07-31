@@ -4,7 +4,7 @@ layout = cms.PSet(
     ## dataset
     #dataset = cms.string("#scale[1.5]{CMS}   h,H,A#rightarrow#tau#tau                     19.7 fb^{-1} (8 TeV) + 4.9 fb^{-1} (7 TeV)"),
     #dataset = cms.string("#scale[1.5]{CMS} (unpublished), h,H,A#rightarrow#tau#tau, 19.7 fb^{-1} (8 TeV) + 4.9 fb^{-1} (7 TeV)"),
-    dataset = cms.string("A#rightarrowZh#rightarrowll#tau#tau"),
+    dataset = cms.string("A#rightarrowZh#rightarrow#it{ll}#tau#tau"),
     #dataset = cms.string("#scale[1.5]{CMS}   h,H,A#rightarrow#tau#tau                                           18.3 fb^{-1} (8 TeV)"),
     ## lumi label
     lumi = cms.string("19.7 fb^{-1} (8 TeV)"),
