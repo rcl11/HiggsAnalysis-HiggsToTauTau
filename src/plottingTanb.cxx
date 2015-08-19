@@ -67,6 +67,14 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   background->SetLineWidth(-402);
   background->SetLineColor(kWhite);  
 
+
+  TGraphAsymmErrors* observed_leg = new TGraphAsymmErrors();
+  observed_leg->SetFillStyle(1001); //1001
+  observed_leg->SetFillColor(obs->GetNumber());
+  observed_leg->SetLineWidth(-402);
+  observed_leg->SetLineColor(kWhite);  
+
+
   TGraphAsymmErrors* mHconstraint = new TGraphAsymmErrors();
   mHconstraint->SetFillStyle(1001); //1001
   mHconstraint->SetFillColor(kWhite);
@@ -236,7 +244,7 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
     if(!Brazilian) {
       if(observed[0]) observed[0]->SetFillColor(obs->GetNumber());
     }
-    if(observed[0]) leg->AddEntry(observed[0], "Observed", "F");
+    if(observed[0]) leg->AddEntry(observed_leg, "Observed", "F");
   }
   else leg->AddEntry(emptybackground,"","F");
   if(minus1sigma[0]) leg->AddEntry(minus1sigma[0], "#pm 1#sigma Expected","F");
@@ -284,6 +292,12 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   legline->SetLineColor(backgroundColor->GetNumber());
   //if(theory!="2HDM type-I" && theory!="2HDM type-II") legline->DrawLineNDC(leg2->GetX1()+0.015, leg2->GetY2()-0.01, leg2->GetX1()+0.072, leg2->GetY2()-0.01);
   if(theory!="2HDM type-I" && theory!="2HDM type-II") legline->DrawLineNDC(leg2->GetX1()+0.014, leg2->GetY2()-0.062, leg2->GetX1()+0.073, leg2->GetY2()-0.062);
+  TLine* blacklegline;
+  blacklegline = new TLine(605, 13, 680, 13);
+  blacklegline->SetLineWidth(3);
+  blacklegline->SetLineColor(kBlack);
+  blacklegline->DrawLineNDC(leg->GetX1()+0.01, leg->GetY2()-0.062, leg->GetX1()+0.055, leg->GetY2()-0.062);
+
 
   theory1->Draw("same");
 
