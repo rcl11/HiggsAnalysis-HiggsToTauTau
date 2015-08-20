@@ -296,7 +296,7 @@ plottingTanb(TCanvas& canv, TH2D* h2d, std::vector<TGraph*> minus2sigma, std::ve
   blacklegline = new TLine(605, 13, 680, 13);
   blacklegline->SetLineWidth(3);
   blacklegline->SetLineColor(kBlack);
-  blacklegline->DrawLineNDC(leg->GetX1()+0.01, leg->GetY2()-0.062, leg->GetX1()+0.055, leg->GetY2()-0.062);
+  blacklegline->DrawLineNDC(leg->GetX1()+0.0115, leg->GetY2()-0.062, leg->GetX1()+0.0545, leg->GetY2()-0.062);
 
 
   theory1->Draw("same");
