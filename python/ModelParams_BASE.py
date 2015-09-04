@@ -171,7 +171,8 @@ class ModelParams_BASE:
                 else :
                     return str(query['higgses'][higgs][brname[channel[2:]]]*query['higgses']['h'][brname['bb']]*query['higgses']['h'][brname[decay[1:]]]*2) #factor 2: bbtautau or tautaubb
             elif channel == 'AZh' :
-                return str(query['higgses'][higgs][brname[channel]]*query['higgses']['h'][brname['tt']]*0.06729) #BR(Z->ll)=0.03363(ee)+0.03366(mumu) (tautau is not considered)
+                #return str(query['higgses'][higgs][brname[channel]]*query['higgses']['h'][brname['tt']]*0.06729) #BR(Z->ll)=0.03363(ee)+0.03366(mumu) (tautau is not considered)
+                return str(query['higgses'][higgs][brname[channel]]*query['higgses']['h'][brname['tt']]*0.10099) #Above is incorrect, should be full Z->LL BR 
         elif self.ana_type=='Hhh' :
             if channel=='ggHTohhTo2Tau2B' :
                 return str(query['higgses'][higgs][brname[channel[2:]]]*query['higgses']['h'][brname['bb']]*query['higgses']['h'][brname[decay[1:]]]*2) #factor 2: bbtautau or tautaubb
@@ -183,7 +184,8 @@ class ModelParams_BASE:
                 return query['higgses'][higgs][brname[decay[1:]]]
         elif self.ana_type=='AZh':
             if channel=='AZh' :
-                return str(query['higgses'][higgs][brname[channel]]*query['higgses']['h'][brname['tt']]*0.06729) #BR(Z->ll)=0.03363(ee)+0.03366(mumu) (tautau is not considered)
+                #return str(query['higgses'][higgs][brname[channel]]*query['higgses']['h'][brname['tt']]*0.06729) #BR(Z->ll)=0.03363(ee)+0.03366(mumu) (tautau is not considered)
+                return str(query['higgses'][higgs][brname[channel]]*query['higgses']['h'][brname['tt']]*0.10099) #Above is incorrect, should be full Z->LL BR 
         elif self.ana_type=='Htaunu':
             if 'CMS_ttHpHp_signal' in channel :
                 return str(query['higgses'][higgs][brname['tHpb']]*query['higgses'][higgs][brname['tHpb']]*query['higgses'][higgs][brname['taunu']]*query['higgses'][higgs][brname['taunu']])

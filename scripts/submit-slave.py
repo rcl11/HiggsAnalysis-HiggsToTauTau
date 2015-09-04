@@ -107,7 +107,7 @@ import os
 import re
 import ROOT # needed for ana_type=Hhh to recalculate mH into mA
 from HiggsAnalysis.HiggsToTauTau.tools.mssm_xsec_tools import mssm_xsec_tools # needed for ana_type=Hhh to recalculate mH into mA
-
+from decimal import *
 
 ## define root path (to allow for direcotry
 ## structure of arbitrary depth)
@@ -284,13 +284,23 @@ for directory in args :
                     os.system("cp tmp*.txt debug")
                 else :
                     for tanb in points :
-                        #print "translating tmp_{tanb}0.txt into workspace".format(tanb=tanb)
+                        #horrible hack to deal with tanb values with more than 1 digit after decimal point
+                        zero = "0"
+                        if "." in str(tanb):
+                            size = len(str(tanb).split(".")[1])
+                            if size == 2:
+                                zero = ""
+                        print "translating tmp_{tanb}0.txt into workspace".format(tanb=tanb)
                         if options.MSSMvsSM :
-                            os.system("text2workspace.py -m {mass} tmp_{tanb}0.txt -P HiggsAnalysis.HiggsToTauTau.PhysicsBSMModel:twoHypothesisHiggs -o fixedMu_{tanb}0.root".format(
-                                mass=str(masspoint), tanb=tanb))
+                            os.system("text2workspace.py -m {mass} tmp_{tanb}{zero}.txt -P HiggsAnalysis.HiggsToTauTau.PhysicsBSMModel:twoHypothesisHiggs -o fixedMu_{tanb}{zero}.root".format(
+                                mass=str(masspoint), tanb=tanb, zero=zero))
+                           # os.system("text2workspace.py -m {mass} tmp_{tanb}0.txt -P HiggsAnalysis.HiggsToTauTau.PhysicsBSMModel:twoHypothesisHiggs -o fixedMu_{tanb}0.root".format(
+                           #     mass=str(masspoint), tanb=tanb))
                         else :
-                            os.system("text2workspace.py -m {mass} tmp_{tanb}0.txt -o batch_{tanb}0.root".format(
-                                mass=str(masspoint), tanb=tanb))
+                            os.system("text2workspace.py -m {mass} tmp_{tanb}{zero}.txt -o batch_{tanb}{zero}.root".format(
+                                mass=str(masspoint), tanb=tanb, zero=zero))
+                            #os.system("text2workspace.py -m {mass} tmp_{tanb}0.txt -o batch_{tanb}0.root".format(
+                            #    mass=str(masspoint), tanb=tanb))
                         if not os.path.exists("debug") :
                             os.system("mkdir debug")
                         os.system("cp tmp*.txt debug")
