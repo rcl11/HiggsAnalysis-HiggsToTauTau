@@ -73,7 +73,7 @@ layout = cms.PSet(
     ## plot expected only
     expectedOnly = cms.bool(False),
     ## use TGraph2D interpolation 
-    fitModel = cms.uint32(2),
+    FitMethod = cms.int32(2),
     ## print constraints from mH=125GeV
     higgs125 = cms.bool(True),
     ## add arXiv-1211-6956 (ATLAS) to plot
