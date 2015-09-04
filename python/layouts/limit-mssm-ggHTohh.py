@@ -2,16 +2,19 @@ import FWCore.ParameterSet.Config as cms
 
 layout = cms.PSet(
     ## dataset
-    dataset = cms.string("H#rightarrowhh#rightarrow#tau#taubb, e#tau_{h}+#mu#tau_{h}+#tau_{h}#tau_{h}"),	
+    dataset = cms.string("e#tau_{h}+#mu#tau_{h}+#tau_{h}#tau_{h}"),	
+    #dataset = cms.string("e#tau_{h}"),	
+    #dataset = cms.string("#mu#tau_{h}"),	
+    #dataset = cms.string("#tau_{h}#tau_{h}"),	
     lumi = cms.string("19.7 fb^{-1} (8 TeV)"),
-    #dataset = cms.string("CMS Preliminary, H #rightarrow #tau #tau, 18.3 fb^{-1} at 8 TeV"),
+    analabel = cms.string("H#rightarrowhh#rightarrowbb#tau#tau"),
     ## extra labels (below legend)
     extra = cms.string(""),	
     #extra = cms.string("gg#rightarrow#phi bb set to zero"),
     ## x-axis title
-    xaxis = cms.string("m_{H} [GeV]"),
+    xaxis = cms.string("m_{H} (GeV)"),
     ## x-axis title
-    yaxis = cms.string("95% CL limit on #sigma(gg#rightarrowH)#timesBR(H#rightarrowhh#rightarrow#tau#taubb) [pb]"),
+    yaxis = cms.string("95% CL limit on #sigma(ggH)#timesB(H#rightarrowhh#rightarrowbb#tau#tau) (pb)"),
     ## min for plotting
     min = cms.double(0.01),
     ## max for plotting
@@ -32,7 +35,11 @@ layout = cms.PSet(
     outputLabel = cms.string("ggHTohh-limit"), 
     ## define masspoints for limit plot
     masspoints = cms.vdouble(
-   260.
+   # 220.
+   #,230.
+   #,240.
+   #,250.
+    260.
    ,270.
    ,280.
    ,290.
@@ -44,7 +51,7 @@ layout = cms.PSet(
    ,350.
     ),
     ## SM like limit without the line at sigma=1
-#    mssm_nolog = cms.bool(True),
+    #mssm_nolog = cms.bool(True),
     mssm_ = cms.bool(True),
     ## plot expected only
     expectedOnly = cms.bool(False),

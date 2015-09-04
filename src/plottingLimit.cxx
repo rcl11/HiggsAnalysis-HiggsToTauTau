@@ -34,7 +34,7 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   if(mssm_log){
     if(observed){ observed->GetX()[0] = observed->GetX()[0]+0.01; }
     if(expected->GetX()[0]<100.){ shift_label = -1.; }
-    canv.SetLogx(1); 
+    canv.SetLogx(0); 
   }
   // draw a frame to define the range
   TH1F* hr=canv.DrawFrame(expected->GetX()[0]-shift_label*.01, min, expected->GetX()[expected->GetN()-1]+.01, max);
@@ -52,16 +52,17 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   hr->SetYTitle(yaxis.c_str());
   hr->GetYaxis()->SetLabelFont(62);
   hr->GetYaxis()->SetTitleFont(62);
-  hr->GetYaxis()->SetTitleOffset(1.30);
+  hr->GetYaxis()->SetTitleOffset(1.4);
   if(mssm_nolog) hr->GetYaxis()->SetTitleOffset(1.4);
   hr->GetYaxis()->SetLabelSize(0.045);
-  if(mssm_nolog) hr->GetYaxis()->SetTitleSize(0.040);
-  hr->SetNdivisions(505, "X");
+  hr->GetYaxis()->SetTitleSize(0.040);
+  if(mssm_nolog) hr->GetYaxis()->SetTitleSize(0.035);
+  //hr->GetXaxis()->SetNdivisions(10);
   if(mssm_log){
-    hr->SetNdivisions(50005, "X");
+    //hr->SetNdivisions(-505, "X");
     hr->GetXaxis()->SetMoreLogLabels();
     hr->GetXaxis()->SetNoExponent();
-    hr->GetXaxis()->SetLabelSize(0.040);
+    hr->GetXaxis()->SetLabelSize(0.045);
   }
   if(outerBand){
     outerBand->SetLineWidth(1.);
@@ -147,8 +148,9 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   std::cout<<legendOnRight<<std::endl;
   // add proper legend
   TLegend* leg;
-  if(!mssm_log) leg = new TLegend(legendOnRight ? 0.5 : 0.18, 0.65, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
-  else leg = new TLegend(legendOnRight ? 0.35 : 0.18, 0.70, legendOnRight ? 0.95 : (injected ? 0.80 :0.655), 0.90);
+  //if(!mssm_log) leg = new TLegend(legendOnRight ? 0.5 : 0.18, 0.65, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
+  if(!mssm_log) leg = new TLegend(legendOnRight ? 0.7 : 0.18, 0.65, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
+  else leg = new TLegend(legendOnRight ? 0.5 : 0.18, 0.65, legendOnRight ? 0.99 : (injected ? 0.80 :0.655), 0.90);
   leg->SetBorderSize( 0 );
   leg->SetFillStyle( 1001 );
   leg->SetFillColor(kWhite);
