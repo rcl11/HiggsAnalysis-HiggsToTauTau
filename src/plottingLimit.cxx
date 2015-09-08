@@ -64,12 +64,25 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
     hr->GetXaxis()->SetNoExponent();
     hr->GetXaxis()->SetLabelSize(0.045);
   }
+  // Optional scaling factor, hardcoded for now but could be made an option
+  //To go to A->Zh from A->Zh->LLtautau (BR h->tautau = 6.32E-02, BR Z->LL = 0.10099)   
+  //double scaling_factor=156.6767/1000; //gives limit in pb
+  //To go to H->hh from H->hh->bbtautau (BR h->tautau = 6.32E-02, BR Z->LL = 5.77E-01, dont forget factor 2)   
+  //double scaling_factor=13.711; //gives limit in pb
+  double scaling_factor=1.0; 
+
   if(outerBand){
     outerBand->SetLineWidth(1.);
     outerBand->SetLineColor(kBlack);
     if(injected) outerBand->SetFillColor(kAzure-9);
     else if(BG_Higgs) outerBand->SetFillColor(kSpring+5);
     else outerBand->SetFillColor(TColor::GetColor(252,241,15));
+    if(scaling_factor != 1.0) {
+        for (int i=0;i<outerBand->GetN();i++) { 
+          outerBand->GetY()[i] *= scaling_factor;
+          outerBand->SetPointError(i,outerBand->GetErrorXlow(i),outerBand->GetErrorXhigh(i),outerBand->GetErrorYlow(i)*scaling_factor,outerBand->GetErrorYhigh(i)*scaling_factor);
+        }
+    }
     outerBand->Draw("3");
   }
   if(innerBand){
@@ -80,15 +93,28 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
       innerBand->SetLineWidth(3.);
       innerBand->SetLineColor(kBlack);
       innerBand->SetFillColor(kGreen);
+      if(scaling_factor != 1.0) {
+        for (int i=0;i<innerBand->GetN();i++) { 
+          innerBand->GetY()[i] *= scaling_factor;
+          innerBand->SetPointError(i,innerBand->GetErrorXlow(i),innerBand->GetErrorXhigh(i),innerBand->GetErrorYlow(i)*scaling_factor,innerBand->GetErrorYhigh(i)*scaling_factor);
+        }
+      }
       innerBand->Draw("3same");
-    }
+   } 
     else{
       innerBand->SetLineWidth(1.);
       innerBand->SetLineColor(kBlack);
       if(injected) innerBand->SetFillColor(kAzure-4);
       else if(BG_Higgs) innerBand->SetFillColor(kGreen+2);
       else innerBand->SetFillColor(kGreen);
+      if(scaling_factor != 1.0) {
+        for (int i=0;i<innerBand->GetN();i++) { 
+          innerBand->GetY()[i] *= scaling_factor;
+          innerBand->SetPointError(i,innerBand->GetErrorXlow(i),innerBand->GetErrorXhigh(i),innerBand->GetErrorYlow(i)*scaling_factor,innerBand->GetErrorYhigh(i)*scaling_factor);
+        }
+      }
       innerBand->Draw("3same");
+    
     }
   }
   if(expected){
@@ -99,12 +125,14 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
       expected->SetMarkerColor(kBlack);
       expected->SetMarkerSize(1.0);
       expected->SetMarkerStyle(20);
+      if(scaling_factor!=1.0){for (int i=0;i<expected->GetN();i++) expected->GetY()[i] *= scaling_factor;}
       expected->Draw("PL");
     }
     else{
       expected->SetLineWidth(3);
       expected->SetLineColor(kBlack);
       expected->SetLineStyle(2);
+      if(scaling_factor!=1.0){for (int i=0;i<expected->GetN();i++) expected->GetY()[i] *= scaling_factor;}
       expected->Draw("L");
     }
   }
@@ -127,6 +155,7 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
     observed->SetMarkerSize(1.0);
     observed->SetMarkerStyle(20);
     observed->SetLineWidth(3.);
+    if(scaling_factor!=1.0){for (int i=0;i<observed->GetN();i++) observed->GetY()[i] *= scaling_factor;}
     observed->Draw("PLsame");
   }
 
