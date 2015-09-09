@@ -67,6 +67,8 @@ plottingLimit(TCanvas& canv, TGraphAsymmErrors* innerBand, TGraphAsymmErrors* ou
   // Optional scaling factor, hardcoded for now but could be made an option
   //To go to A->Zh from A->Zh->LLtautau (BR h->tautau = 6.32E-02, BR Z->LL = 0.10099)   
   //double scaling_factor=156.6767/1000; //gives limit in pb
+  //To go to A->Zh->lltautau from A->Zh->LLtautau (BR Z->ll = 0.06729, BR Z->LL = 0.10099)   
+  //double scaling_factor=0.06729/0.10099; //gives limit in fb
   //To go to H->hh from H->hh->bbtautau (BR h->tautau = 6.32E-02, BR Z->LL = 5.77E-01, dont forget factor 2)   
   //double scaling_factor=13.711; //gives limit in pb
   double scaling_factor=1.0; 
